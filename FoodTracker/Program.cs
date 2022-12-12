@@ -1,4 +1,5 @@
 using FoodTracker.Data;
+using FoodTracker.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>options
+builder.Services.AddDbContext<FoodTrackerDbContext>(options =>options
     .UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -20,11 +21,14 @@ builder.Services
         options.Password.RequireNonAlphanumeric = false;
        
     })
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<FoodTrackerDbContext>();
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+
+app.PrepareDatabase();
 
 
 if (app.Environment.IsDevelopment())
@@ -50,5 +54,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
 
 app.Run();
