@@ -3,6 +3,7 @@ using FoodTracker.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -25,10 +26,20 @@ builder.Services
 
 builder.Services.AddControllersWithViews();
 
+
+
 var app = builder.Build();
 
 
 app.PrepareDatabase();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<FoodTrackerDbContext>();
+    context.Database.Migrate();
+}
 
 
 if (app.Environment.IsDevelopment())

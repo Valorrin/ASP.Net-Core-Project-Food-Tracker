@@ -14,7 +14,8 @@ namespace FoodTracker.Data
 
         public DbSet<Food> Food { get; init; }
 
-        public DbSet<Diary> Diary { get; init; }
+
+        public DbSet<Category> Categories { get; init; }
 
     }
 }

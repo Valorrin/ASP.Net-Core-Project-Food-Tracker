@@ -2,14 +2,15 @@
 
 using static FoodTracker.Data.DataConstants;
 
-namespace FoodTracker.Data.Models
+namespace FoodTracker.Models.Food
 {
-    public class Food
+    public class AddFoodFormModel
     {
-        public int Id { get; init; }
-
-        [Required]
-        [MaxLength(FoodNameMaxLength)]
+        [Required(ErrorMessage = "Please enter a food name")]
+        [StringLength(
+            FoodNameMaxLength, 
+            MinimumLength = FoodNameMinLength,
+            ErrorMessage = "The name must be between {2} and {1} characters.")]
         public string Name { get; init; }
 
         [Range(FoodCaloriesMinLength, FoodCaloriesMaxLength)]
@@ -24,9 +25,10 @@ namespace FoodTracker.Data.Models
         [Range(FoodFatMinLength, FoodFatMaxLength)]
         public double Fat { get; init; }
 
-        public int CategoryId { get; set; }
+        [Display(Name = "Category")]
+        public int CategoryId { get; init; }
 
-        public Category Category { get; init; }
-
+        [Display(Name = "trash")]
+        public IEnumerable<FoodCategoryViewModel>? Categories { get; set; }
     }
 }

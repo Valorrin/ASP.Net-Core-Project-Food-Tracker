@@ -4,6 +4,7 @@ using FoodTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodTracker.Data.Migrations
 {
     [DbContext(typeof(FoodTrackerDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221212190819_CategoryTable")]
+    partial class CategoryTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,6 +41,28 @@ namespace FoodTracker.Data.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("FoodTracker.Data.Models.Diary", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<double>("CalorieTarget")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("TotalCalories")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Diary");
+                });
+
             modelBuilder.Entity("FoodTracker.Data.Models.Food", b =>
                 {
                     b.Property<int>("Id")
@@ -56,13 +80,16 @@ namespace FoodTracker.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("DiaryId")
+                        .HasColumnType("int");
+
                     b.Property<double>("Fat")
                         .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(180)
+                        .HasColumnType("nvarchar(180)");
 
                     b.Property<double>("Protein")
                         .HasColumnType("float");
@@ -70,6 +97,8 @@ namespace FoodTracker.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("DiaryId");
 
                     b.ToTable("Food");
                 });
@@ -284,6 +313,10 @@ namespace FoodTracker.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FoodTracker.Data.Models.Diary", null)
+                        .WithMany("Foods")
+                        .HasForeignKey("DiaryId");
+
                     b.Navigation("Category");
                 });
 
@@ -341,6 +374,11 @@ namespace FoodTracker.Data.Migrations
             modelBuilder.Entity("FoodTracker.Data.Models.Category", b =>
                 {
                     b.Navigation("Food");
+                });
+
+            modelBuilder.Entity("FoodTracker.Data.Models.Diary", b =>
+                {
+                    b.Navigation("Foods");
                 });
 #pragma warning restore 612, 618
         }
