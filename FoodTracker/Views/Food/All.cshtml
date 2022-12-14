@@ -1,0 +1,43 @@
+﻿@model IEnumerable<FoodListingViewModel>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Food Name</th>
+      <th scope="col">Grams</th>
+      <th scope="col">Calories</th>
+      <th scope="col">Protein</th>
+      <th scope="col">Carbs</th>
+      <th scope="col">Fat</th>
+    </tr>
+  </thead>
+    @{
+        int rowCount = 1;
+
+        foreach (var food in Model)
+        {
+            // Food Nutrition for 100g;
+            food.Calories = (food.Calories / food.Grams) * 100;
+            food.Protein  = (food.Protein / food.Grams) * 100;
+            food.Protein= (food.Protein / food.Grams) * 100;
+            food.Carbs = (food.Carbs / food.Grams) * 100;
+            food.Fat = (food.Fat / food.Grams) * 100;
+            food.Grams = 100;
+
+         <tbody class="table-group-divider">
+          <tr>
+           <th scope="row">@rowCount</th>
+           <td>@food.Name</td>
+           <td>@food.Grams</td>
+           <td>@food.Calories</td>
+           <td>@food.Protein</td>
+           <td>@food.Carbs</td>
+           <td>@food.Fat</td>
+          </tr>
+         </tbody>
+
+         rowCount++;
+        }
+    }
+</table>
