@@ -18,6 +18,26 @@ namespace FoodTracker.Controllers
             Categories = this.GetFoodCategories()
         });
 
+        public IActionResult All()
+        {
+            var foods = this.data
+                .Food
+                .OrderByDescending(f => f.Id)
+                .Select(f => new FoodListingViewModel
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    Grams = f.Grams,
+                    Calories = f.Calories,
+                    Protein = f.Protein,
+                    Carbs = f.Carbs,
+                    Fat = f.Fat
+                })
+                .ToList();
+
+            return View(foods);
+        }
+
         [HttpPost]
         public IActionResult Add(AddFoodFormModel food)
         {
@@ -36,6 +56,7 @@ namespace FoodTracker.Controllers
             var foodData = new Food
             {
                 Name = food.Name,
+                Grams = food.Grams,
                 Calories = food.Calories,
                 Protein = food.Protein,
                 Carbs = food.Carbs,
@@ -47,16 +68,16 @@ namespace FoodTracker.Controllers
 
             this.data.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(All));
         }
 
         private IEnumerable<FoodCategoryViewModel> GetFoodCategories()
             => this.data
                 .Categories
-            .Select(c => new FoodCategoryViewModel
+            .Select(f => new FoodCategoryViewModel
             {
-                Id = c.Id,
-                Name = c.Name,
+                Id = f.Id,
+                Name = f.Name,
             })
             .ToList();
 

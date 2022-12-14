@@ -5,16 +5,19 @@
         public const int FoodNameMinLength = 2;
         public const int FoodNameMaxLength = 100;
 
-        public const int FoodCaloriesMinLength = 0;
-        public const int FoodCaloriesMaxLength = 1000;
+        public const int FoodCaloriesMinValue = 1;
+        public const int FoodCaloriesMaxValue = 45000;
 
-        public const int FoodProteinMinLength = 0;
-        public const int FoodProteinMaxLength = 500;
+        public const int FoodProteinMinValue = 1;
+        public const int FoodProteinMaxValue = 20000;
 
-        public const int FoodCarbsMinLength = 0;
-        public const int FoodCarbsMaxLength = 500;
+        public const int FoodCarbsMinValue = 1;
+        public const int FoodCarbsMaxValue = 20000;
 
-        public const int FoodFatMinLength = 0;
-        public const int FoodFatMaxLength = 1000;
+        public const int FoodFatMinValue = 1;
+        public const int FoodFatMaxValue = 45000;
+
+        public const int FoodGramsMinValue = 1;
+        public const int FoodGramsMaxValue = 5000;
     }
 }

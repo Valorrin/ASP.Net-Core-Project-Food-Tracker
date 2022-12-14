@@ -12,16 +12,19 @@ namespace FoodTracker.Data.Models
         [MaxLength(FoodNameMaxLength)]
         public string Name { get; init; }
 
-        [Range(FoodCaloriesMinLength, FoodCaloriesMaxLength)]
+        [Range(FoodGramsMinValue, FoodGramsMaxValue)]
+        public double Grams { get; init; }
+
+        [Range(FoodCaloriesMinValue, FoodCaloriesMaxValue)]
         public double Calories { get; init; }
 
-        [Range(FoodProteinMinLength, FoodProteinMaxLength)]
+        [Range(FoodProteinMinValue, FoodProteinMaxValue)]
         public double Protein { get; init; }
 
-        [Range(FoodCarbsMinLength, FoodCarbsMaxLength)]
+        [Range(FoodCarbsMinValue, FoodCarbsMaxValue)]
         public double Carbs { get; init; }
 
-        [Range(FoodFatMinLength, FoodFatMaxLength)]
+        [Range(FoodFatMinValue, FoodFatMaxValue)]
         public double Fat { get; init; }
 
         public int CategoryId { get; set; }

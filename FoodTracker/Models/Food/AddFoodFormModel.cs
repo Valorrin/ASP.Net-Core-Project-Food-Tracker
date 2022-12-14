@@ -13,16 +13,19 @@ namespace FoodTracker.Models.Food
             ErrorMessage = "The name must be between {2} and {1} characters.")]
         public string Name { get; init; }
 
-        [Range(FoodCaloriesMinLength, FoodCaloriesMaxLength)]
+        [Range(FoodGramsMinValue, FoodGramsMaxValue)]
+        public double Grams { get; init; }
+
+        [Range(FoodCaloriesMinValue, FoodCaloriesMaxValue)]
         public double Calories { get; init; }
 
-        [Range(FoodProteinMinLength, FoodProteinMaxLength)]
+        [Range(FoodProteinMinValue, FoodProteinMaxValue)]
         public double Protein { get; init; }
 
-        [Range(FoodCarbsMinLength, FoodCarbsMaxLength)]
+        [Range(FoodCarbsMinValue, FoodCarbsMaxValue)]
         public double Carbs { get; init; }
 
-        [Range(FoodFatMinLength, FoodFatMaxLength)]
+        [Range(FoodFatMinValue, FoodFatMaxValue)]
         public double Fat { get; init; }
 
         [Display(Name = "Category")]
