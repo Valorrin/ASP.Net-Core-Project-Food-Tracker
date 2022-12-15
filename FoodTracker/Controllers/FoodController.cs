@@ -11,49 +11,18 @@ namespace FoodTracker.Controllers
     public class FoodController : Controller
     {
         private readonly FoodTrackerDbContext data;
-
         public FoodController(FoodTrackerDbContext data) => this.data = data;
+
 
         public IActionResult Add() => View(new AddFoodFormModel
         {
             Categories = this.GetFoodCategories()
         });
 
-        public IActionResult All(string searchTerm)
-        {
-            var foodsQuery = this.data.Food.AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(searchTerm))
-            {
-                foodsQuery = foodsQuery.Where(f =>
-                    f.Name.ToLower().Contains(searchTerm.ToLower()));
-            }
-
-            var foods = foodsQuery
-                .OrderByDescending(f => f.Id)
-                .Select(f => new FoodListingViewModel
-                {
-                    Id = f.Id,
-                    Name = f.Name,
-                    Grams = f.Grams,
-                    Calories = f.Calories,
-                    Protein = f.Protein,
-                    Carbs = f.Carbs,
-                    Fat = f.Fat
-                })
-                .ToList();
-
-            return View(new FoodSearchQueryModel
-            {
-                Foods = foods,
-                SearchTerm = searchTerm
-            });
-        }
-
         [HttpPost]
         public IActionResult Add(AddFoodFormModel food)
         {
-            if (!this.data.Categories.Any(c=> c.Id == food.CategoryId))
+            if (!this.data.Categories.Any(c => c.Id == food.CategoryId))
             {
                 this.ModelState.AddModelError(nameof(food.CategoryId), "Category don't exist");
             }
@@ -61,7 +30,7 @@ namespace FoodTracker.Controllers
             if (!ModelState.IsValid)
             {
                 food.Categories = this.GetFoodCategories();
-  
+
                 return View(food);
             }
 
@@ -82,6 +51,58 @@ namespace FoodTracker.Controllers
 
             return RedirectToAction(nameof(All));
         }
+
+
+        public IActionResult All(
+            string searchTerm,
+            string foodName,
+            FoodSorting sorting)
+        {
+            var foodsQuery = this.data.Food.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                foodsQuery = foodsQuery.Where(f =>
+                    f.Name.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            foodsQuery = sorting switch
+            {
+                FoodSorting.NameAscending => foodsQuery.OrderBy(f=>f.Name),
+                FoodSorting.NameDescending => foodsQuery.OrderByDescending(f=>f.Name),
+                FoodSorting.MostRecent or _=> foodsQuery.OrderByDescending(f=>f.Id)
+            };
+
+            var foods = foodsQuery
+                .Select(f => new FoodListingViewModel
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    Grams = f.Grams,
+                    Calories = f.Calories,
+                    Protein = f.Protein,
+                    Carbs = f.Carbs,
+                    Fat = f.Fat
+                })
+                .ToList();
+
+            var foodNames = this.data
+                .Food
+                .Select(f => f.Name)
+                .Distinct()
+                .OrderBy(fn => fn)
+                .ToList();
+
+            return View(new FoodSearchQueryModel
+            {
+                Name = foodName,
+                Names = foodNames,
+                Foods = foods,
+                Sorting = sorting,
+                SearchTerm = searchTerm
+            });
+        }
+
 
         private IEnumerable<FoodCategoryViewModel> GetFoodCategories()
             => this.data

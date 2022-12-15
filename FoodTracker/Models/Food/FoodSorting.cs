@@ -2,7 +2,8 @@
 {
     public enum FoodSorting
     {
-        FoodName = 0,
-        Calories = 1
+        MostRecent = 0,
+        NameAscending = 1,
+        NameDescending = 2,
     }
 }

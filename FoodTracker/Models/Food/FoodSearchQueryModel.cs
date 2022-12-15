@@ -2,6 +2,7 @@
 {
     public class FoodSearchQueryModel
     {
+        public string Name { get; set; }
         public IEnumerable<string> Names { get; set; }
 
         public string SearchTerm { get; set; }
