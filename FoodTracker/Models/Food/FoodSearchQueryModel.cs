@@ -4,7 +4,7 @@
     {
         public IEnumerable<string> Names { get; set; }
 
-        public IEnumerable<string> SearchTerm { get; set; }
+        public string SearchTerm { get; set; }
 
         public FoodSorting Sorting {get; set;}
 

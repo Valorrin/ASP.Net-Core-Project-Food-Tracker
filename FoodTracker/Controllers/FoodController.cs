@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FoodTracker.Data;
 using FoodTracker.Data.Models;
 using FoodTracker.Models.Food;
@@ -18,10 +19,17 @@ namespace FoodTracker.Controllers
             Categories = this.GetFoodCategories()
         });
 
-        public IActionResult All()
+        public IActionResult All(string searchTerm)
         {
-            var foods = this.data
-                .Food
+            var foodsQuery = this.data.Food.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                foodsQuery = foodsQuery.Where(f =>
+                    f.Name.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            var foods = foodsQuery
                 .OrderByDescending(f => f.Id)
                 .Select(f => new FoodListingViewModel
                 {
@@ -35,7 +43,11 @@ namespace FoodTracker.Controllers
                 })
                 .ToList();
 
-            return View(foods);
+            return View(new FoodSearchQueryModel
+            {
+                Foods = foods,
+                SearchTerm = searchTerm
+            });
         }
 
         [HttpPost]
