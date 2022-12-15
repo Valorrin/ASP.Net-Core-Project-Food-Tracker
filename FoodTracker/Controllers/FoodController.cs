@@ -53,27 +53,28 @@ namespace FoodTracker.Controllers
         }
 
 
-        public IActionResult All(
-            string searchTerm,
-            string foodName,
-            FoodSorting sorting)
+        public IActionResult All([FromQuery] FoodSearchQueryModel query)
         {
             var foodsQuery = this.data.Food.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
             {
                 foodsQuery = foodsQuery.Where(f =>
-                    f.Name.ToLower().Contains(searchTerm.ToLower()));
+                    f.Name.ToLower().Contains(query.SearchTerm.ToLower()));
             }
 
-            foodsQuery = sorting switch
+            foodsQuery = query.Sorting switch
             {
                 FoodSorting.NameAscending => foodsQuery.OrderBy(f=>f.Name),
                 FoodSorting.NameDescending => foodsQuery.OrderByDescending(f=>f.Name),
                 FoodSorting.MostRecent or _=> foodsQuery.OrderByDescending(f=>f.Id)
             };
 
+            var totalFoods = foodsQuery.Count();
+
             var foods = foodsQuery
+                .Skip((query.CurrentPage - 1) * FoodSearchQueryModel.FoodsPerPage)
+                .Take(FoodSearchQueryModel.FoodsPerPage)
                 .Select(f => new FoodListingViewModel
                 {
                     Id = f.Id,
@@ -93,14 +94,11 @@ namespace FoodTracker.Controllers
                 .OrderBy(fn => fn)
                 .ToList();
 
-            return View(new FoodSearchQueryModel
-            {
-                Name = foodName,
-                Names = foodNames,
-                Foods = foods,
-                Sorting = sorting,
-                SearchTerm = searchTerm
-            });
+            query.TotalFoods = totalFoods;
+            query.Names = foodNames;
+            query.Foods = foods;
+
+            return View(query);
         }
 
 
