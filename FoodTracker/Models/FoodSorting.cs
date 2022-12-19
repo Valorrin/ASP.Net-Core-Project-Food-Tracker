@@ -1,4 +1,4 @@
-﻿namespace FoodTracker.Models.Food
+﻿namespace FoodTracker.Models
 {
     public enum FoodSorting
     {

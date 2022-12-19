@@ -74,12 +74,16 @@
         foreach (var food in Model.Foods)
         {
             // Food Nutrition for 100g;
-            food.Calories = (food.Calories / food.Grams) * 100;
-            food.Protein  = (food.Protein / food.Grams) * 100;
-            food.Protein= (food.Protein / food.Grams) * 100;
-            food.Carbs = (food.Carbs / food.Grams) * 100;
-            food.Fat = (food.Fat / food.Grams) * 100;
-            food.Grams = 100;
+           //  if( food.Calories != 100)
+            //{
+              //  food.Calories = (food.Calories / food.Grams) * 100;
+                //food.Protein  = (food.Protein / food.Grams) * 100;
+                //food.Protein= (food.Protein / food.Grams) * 100;
+                //food.Carbs = (food.Carbs / food.Grams) * 100;
+                //food.Fat = (food.Fat / food.Grams) * 100;
+                //food.Grams = 100;
+            //}
+
 
          <tbody class="table-group-divider">
           <tr>

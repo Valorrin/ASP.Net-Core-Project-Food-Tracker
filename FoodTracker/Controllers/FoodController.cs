@@ -2,6 +2,7 @@
 using System.Linq;
 using FoodTracker.Data;
 using FoodTracker.Data.Models;
+using FoodTracker.Models;
 using FoodTracker.Models.Food;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;

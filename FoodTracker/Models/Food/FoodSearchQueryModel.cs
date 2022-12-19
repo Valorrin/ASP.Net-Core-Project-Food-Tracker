@@ -2,7 +2,7 @@
 {
     public class FoodSearchQueryModel
     {
-        public const int FoodsPerPage = 2;
+        public const int FoodsPerPage = 5;
 
         public string Name { get; set; }
         public IEnumerable<string> Names { get; set; }

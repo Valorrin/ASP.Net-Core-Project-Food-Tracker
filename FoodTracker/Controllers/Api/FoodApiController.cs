@@ -1,5 +1,7 @@
 ﻿using FoodTracker.Data;
+using FoodTracker.Models;
 using FoodTracker.Data.Models;
+using FoodTracker.Models.Api.Food;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 
@@ -15,24 +17,55 @@ namespace FoodTracker.Controllers.Api
             => this.data = data;
 
         [HttpGet]
+        [Route("аll")]
         public IEnumerable GetFood()
         {
             return this.data.Food.ToList();
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public IActionResult GetDetails(int id)
-        {
-            var food = this.data.Food.Find(id);
 
-            if (food == null)
+        [HttpGet]
+        public ActionResult<AllFoodsApiResponseModel> All([FromQuery] AllFoodsApiRequestModel query)
+        {
+            var foodsQuery = this.data.Food.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
             {
-                return NotFound();
+                foodsQuery = foodsQuery.Where(f =>
+                    f.Name.ToLower().Contains(query.SearchTerm.ToLower()));
             }
 
-            return Ok(food);
-        }
+            foodsQuery = query.Sorting switch
+            {
+                FoodSorting.NameAscending => foodsQuery.OrderBy(f => f.Name),
+                FoodSorting.NameDescending => foodsQuery.OrderByDescending(f => f.Name),
+                FoodSorting.MostRecent or _ => foodsQuery.OrderByDescending(f => f.Id)
+            };
 
+            var totalFoods = foodsQuery.Count();
+
+            var foods = foodsQuery
+                .Skip((query.CurrentPage - 1) * query.FoodsPerPage)
+                .Take(query.FoodsPerPage)
+                .Select(f => new FoodResponseModel
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    Grams = f.Grams,
+                    Calories = f.Calories,
+                    Protein = f.Protein,
+                    Carbs = f.Carbs,
+                    Fat = f.Fat
+                })
+                .ToList();
+
+            return new AllFoodsApiResponseModel
+            {
+                CurrentPage = query.CurrentPage,
+                TotalFoods = totalFoods,
+                Foods = foods
+            };
+
+        }
     }
 }
