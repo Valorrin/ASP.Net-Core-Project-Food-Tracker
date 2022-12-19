@@ -13,6 +13,5 @@ namespace FoodTracker.Models.Api.Food
         public int CurrentPage { get; set; } = 1;
 
         public int FoodsPerPage { get; set; } = 10;
-        public int TotalFoods { get; set; }
     }
 }

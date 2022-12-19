@@ -1,6 +1,6 @@
-﻿namespace FoodTracker.Models.Api.Food
+﻿namespace FoodTracker.Services.Food
 {
-    public class FoodResponseModel
+    public class FoodServiceModel
     {
         public int Id { get; set; }
 

@@ -1,6 +1,6 @@
-﻿namespace FoodTracker.Models.Api.Statistics
+﻿namespace FoodTracker.Services.Statistics
 {
-    public class StatisticsResponseModel
+    public class StatisticsServiceModel
     {
         public int TotalFoods { get; init; }
 

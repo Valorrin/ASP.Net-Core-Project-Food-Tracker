@@ -1,5 +1,5 @@
 ﻿using FoodTracker.Data;
-using FoodTracker.Models.Api.Statistics;
+using FoodTracker.Services.Statistics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodTracker.Controllers.Api
@@ -9,24 +9,14 @@ namespace FoodTracker.Controllers.Api
     public class StatisticsApiController: ControllerBase
     {
 
-        private readonly FoodTrackerDbContext data;
+        private readonly IStatisticsService statistics;
 
-        public StatisticsApiController(FoodTrackerDbContext data)
-            => this.data = data;
+        public StatisticsApiController(IStatisticsService statistics)
+            => this.statistics = statistics;
 
         [HttpGet]
-        public StatisticsResponseModel GetStatistics()
-        {
-            var totalFoods = this.data.Food.Count();
-            var totalUsers = this.data.Users.Count();
+        public StatisticsServiceModel GetStatistics()
+            => this.statistics.Total();
 
-            return new StatisticsResponseModel
-            {
-                TotalFoods = totalFoods,
-                TotalUsers = totalUsers,
-                TotalRecipies = 0
-            };
-
-        }
     }
 }

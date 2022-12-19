@@ -1,5 +1,7 @@
 using FoodTracker.Data;
 using FoodTracker.Infrastructure;
+using FoodTracker.Services.Food;
+using FoodTracker.Services.Statistics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +28,8 @@ builder.Services
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddTransient<IStatisticsService, StatisticsService>();
+builder.Services.AddTransient<IFoodService, FoodService>();
 
 
 var app = builder.Build();
