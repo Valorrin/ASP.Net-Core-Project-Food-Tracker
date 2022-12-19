@@ -2,22 +2,30 @@
 {
     public class DataConstants
     {
-        public const int FoodNameMinLength = 2;
-        public const int FoodNameMaxLength = 100;
+        public class Food
+        {
+            public const int NameMinLength = 2;
+            public const int NameMaxLength = 100;
 
-        public const int FoodCaloriesMinValue = 1;
-        public const int FoodCaloriesMaxValue = 45000;
+            public const int CaloriesMinValue = 1;
+            public const int CaloriesMaxValue = 45000;
 
-        public const int FoodProteinMinValue = 1;
-        public const int FoodProteinMaxValue = 20000;
+            public const int ProteinMinValue = 1;
+            public const int ProteinMaxValue = 20000;
 
-        public const int FoodCarbsMinValue = 1;
-        public const int FoodCarbsMaxValue = 20000;
+            public const int CarbsMinValue = 1;
+            public const int CarbsMaxValue = 20000;
 
-        public const int FoodFatMinValue = 1;
-        public const int FoodFatMaxValue = 45000;
+            public const int FatMinValue = 1;
+            public const int FatMaxValue = 45000;
 
-        public const int FoodGramsMinValue = 1;
-        public const int FoodGramsMaxValue = 5000;
+            public const int GramsMinValue = 1;
+            public const int GramsMaxValue = 5000;
+        }
+
+        public class Category
+        {
+            public const int NameMaxLength = 10;
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-using static FoodTracker.Data.DataConstants;
+using static FoodTracker.Data.DataConstants.Food;
 
 namespace FoodTracker.Models.Food
 {
@@ -8,24 +8,24 @@ namespace FoodTracker.Models.Food
     {
         [Required(ErrorMessage = "Please enter a food name")]
         [StringLength(
-            FoodNameMaxLength, 
-            MinimumLength = FoodNameMinLength,
+            NameMaxLength, 
+            MinimumLength = NameMinLength,
             ErrorMessage = "The name must be between {2} and {1} characters.")]
         public string Name { get; init; }
 
-        [Range(FoodGramsMinValue, FoodGramsMaxValue)]
+        [Range(GramsMinValue, GramsMaxValue)]
         public double Grams { get; init; }
 
-        [Range(FoodCaloriesMinValue, FoodCaloriesMaxValue)]
+        [Range(CaloriesMinValue, CaloriesMaxValue)]
         public double Calories { get; init; }
 
-        [Range(FoodProteinMinValue, FoodProteinMaxValue)]
+        [Range(ProteinMinValue, ProteinMaxValue)]
         public double Protein { get; init; }
 
-        [Range(FoodCarbsMinValue, FoodCarbsMaxValue)]
+        [Range(CarbsMinValue, CarbsMaxValue)]
         public double Carbs { get; init; }
 
-        [Range(FoodFatMinValue, FoodFatMaxValue)]
+        [Range(FatMinValue, FatMaxValue)]
         public double Fat { get; init; }
 
         [Display(Name = "Category")]

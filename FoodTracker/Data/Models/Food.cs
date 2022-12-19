@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-using static FoodTracker.Data.DataConstants;
+using static FoodTracker.Data.DataConstants.Food;
 
 namespace FoodTracker.Data.Models
 {
@@ -9,22 +9,22 @@ namespace FoodTracker.Data.Models
         public int Id { get; init; }
 
         [Required]
-        [MaxLength(FoodNameMaxLength)]
+        [MaxLength(NameMaxLength)]
         public string Name { get; init; }
 
-        [Range(FoodGramsMinValue, FoodGramsMaxValue)]
+        [Range(GramsMinValue, GramsMaxValue)]
         public double Grams { get; init; }
 
-        [Range(FoodCaloriesMinValue, FoodCaloriesMaxValue)]
+        [Range(CaloriesMinValue, CaloriesMaxValue)]
         public double Calories { get; init; }
 
-        [Range(FoodProteinMinValue, FoodProteinMaxValue)]
+        [Range(ProteinMinValue, ProteinMaxValue)]
         public double Protein { get; init; }
 
-        [Range(FoodCarbsMinValue, FoodCarbsMaxValue)]
+        [Range(CarbsMinValue, CarbsMaxValue)]
         public double Carbs { get; init; }
 
-        [Range(FoodFatMinValue, FoodFatMaxValue)]
+        [Range(FatMinValue, FatMaxValue)]
         public double Fat { get; init; }
 
         public int CategoryId { get; set; }
