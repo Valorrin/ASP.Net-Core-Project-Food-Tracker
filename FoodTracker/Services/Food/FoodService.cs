@@ -1,6 +1,8 @@
 ﻿using FoodTracker.Data;
 using FoodTracker.Models;
 
+using FoodTracker.Data.Models;
+
 namespace FoodTracker.Services.Food
 {
     public class FoodService : IFoodService
@@ -57,6 +59,43 @@ namespace FoodTracker.Services.Food
                 FoodsPerPage = foodsPerPage,
                 Foods = foods,
             };
+        }
+
+        public IEnumerable<string> AllFoodNames()
+            => this.data
+                .Food
+                .Select(f => f.Name)
+                .Distinct()
+                .OrderBy(fn => fn)
+                .ToList();
+
+        public IEnumerable<FoodCategoryServiceModel> GetFoodCategories()
+            => this.data
+                .Categories
+            .Select(f => new FoodCategoryServiceModel
+            {
+                Id = f.Id,
+                Name = f.Name,
+            })
+            .ToList();
+
+        public int Create(string name, double grams, double calories, double protein, double carbs, double fat, int categoryId)
+        {
+            var foodData = new Data.Models.Food
+            {
+                Name = name,
+                Grams = grams,
+                Calories = calories,
+                Protein = protein,
+                Carbs = carbs,
+                Fat = fat,
+                CategoryId = categoryId,
+            };
+
+            this.data.Food.Add(foodData);
+            this.data.SaveChanges();
+
+            return foodData.Id;
         }
     }
 }

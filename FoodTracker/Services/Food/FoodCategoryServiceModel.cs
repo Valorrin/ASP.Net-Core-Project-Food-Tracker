@@ -1,6 +1,6 @@
-﻿namespace FoodTracker.Models.Food
+﻿namespace FoodTracker.Services.Food
 {
-    public class FoodCategoryViewModel
+    public class FoodCategoryServiceModel
     {
         public int Id { get; init; }
 

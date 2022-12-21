@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FoodTracker.Services.Food;
+using System.ComponentModel.DataAnnotations;
 
 using static FoodTracker.Data.DataConstants.Food;
 
@@ -32,6 +33,6 @@ namespace FoodTracker.Models.Food
         public int CategoryId { get; init; }
 
         [Display(Name = "trash")]
-        public IEnumerable<FoodCategoryViewModel>? Categories { get; set; }
+        public IEnumerable<FoodCategoryServiceModel>? Categories { get; set; }
     }
 }

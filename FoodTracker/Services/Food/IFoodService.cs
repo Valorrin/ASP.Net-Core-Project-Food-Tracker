@@ -10,5 +10,19 @@ namespace FoodTracker.Services.Food
             FoodSorting sorting,
             int currentPage,
             int foodsPerPage);
+
+        int Create(
+            string name,
+            double grams,
+            double calories,
+            double protein,
+            double carbs,
+            double fat,
+            int categoryId);
+
+        IEnumerable<string> AllFoodNames();
+
+        IEnumerable<FoodCategoryServiceModel> GetFoodCategories();
+
     }
 }

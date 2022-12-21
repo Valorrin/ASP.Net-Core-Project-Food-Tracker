@@ -1,4 +1,6 @@
-﻿namespace FoodTracker.Models.Food
+﻿using FoodTracker.Services.Food;
+
+namespace FoodTracker.Models.Food
 {
     public class FoodSearchQueryModel
     {
@@ -9,12 +11,12 @@
 
         public string SearchTerm { get; set; }
 
-        public FoodSorting Sorting {get; set;}
+        public FoodSorting Sorting { get; set; }
 
         public int CurrentPage { get; set; } = 1;
 
         public int TotalFoods { get; set; }
 
-        public IEnumerable<FoodListingViewModel> Foods { get; set; }
+        public IEnumerable<FoodServiceModel> Foods { get; set; }
     }
 }
