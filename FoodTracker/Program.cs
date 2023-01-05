@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<FoodTrackerDbContext>(options =>options
+builder.Services.AddDbContext<FoodTrackerDbContext>(options => options
     .UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -18,11 +18,11 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services
     .AddDefaultIdentity<IdentityUser>(options =>
     {
-        options.Password.RequireDigit = false; 
+        options.Password.RequireDigit = false;
         options.Password.RequireUppercase = false;
         options.Password.RequireLowercase = false;
         options.Password.RequireNonAlphanumeric = false;
-       
+
     })
     .AddEntityFrameworkStores<FoodTrackerDbContext>();
 

@@ -9,7 +9,6 @@ namespace FoodTracker.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
         public IEnumerable<Food> Food { get; set; } = new List<Food>();
